@@ -1,6 +1,6 @@
 const { Pokemon, Types } = require('../../db.js')
 
-export default getDBInfo = async () => {
+const getDBInfo = async () => {
     const dbInfo = await Pokemon.findAll({
         include: {
             model: Types,
@@ -11,4 +11,8 @@ export default getDBInfo = async () => {
         }
     })
     return dbInfo
+}
+
+module.exports = {
+    getDBInfo
 }

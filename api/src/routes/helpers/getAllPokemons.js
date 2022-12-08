@@ -1,7 +1,14 @@
-const { getDBinfo } = require('./getDBinfo')
+const { getDBInfo } = require('./getDBinfo')
 const { getPokemonsApi } = require('./getPokemonsApi')
 
-export default getAllPokemons = async () => {
-    const allPokemons = await getPokemonsApi().concat(getDBinfo())
+const getAllPokemons = async () => {
+    const infoaApi = await getPokemonsApi()
+    const infodb = await getDBInfo()
+
+    const allPokemons = infoaApi.concat(infodb)
     return allPokemons
+}
+
+module.exports = {
+    getAllPokemons
 }
