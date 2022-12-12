@@ -68,29 +68,13 @@ router.get('/types', async (req, res) => {
 router.get('/pokemons/:id', async (req, res) => {
     let { id } = req.params
     const pokemons = await getAllPokemons()
-    id = parseInt(id)
     let pokemonId
     if (id) {
-        const pokeDB = await Pokemon.findOne({
-            where: {
-                id: id
-            },
-            include: {
-                model: Types,
-                attributes: ['name'],
-                through: {
-                    attributes: [],
-                },
-            },
-        });
-        if (pokeDB) {
-            return res.status(200).send(pokeDB)
-        }
-        try {
-            pokemonId = pokemons.filter(el => el.id === id)
-            res.send(pokemonId)
-        } catch (error) {
-            res.send(error)
+        pokemonId = pokemons.filter(el => el.id == id)
+        if (pokemonId.length) {
+            res.status(200).send(pokemonId)
+        } else {
+            res.status(404).send(`The id: ${id} does not belong to a pokemon`)
         }
     }
 
