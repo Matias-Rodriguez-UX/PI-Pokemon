@@ -6,6 +6,7 @@ const axios = require('axios');
 const { Pokemon, Types } = require('../db.js')
 const { Op } = require('sequelize');
 const { getTypesFromApi } = require('./helpers/getTypesFromApi');
+const { getPokemonByIDapi } = require('./helpers/getPokemonByIDapi');
 
 
 
@@ -67,43 +68,73 @@ router.get('/types', async (req, res) => {
 
 router.get('/pokemons/:id', async (req, res) => {
     let { id } = req.params
-    const pokemons = await getAllPokemons()
     let pokemonId
-    if (id) {
-        pokemonId = pokemons.filter(el => el.id == id)
-        if (pokemonId.length) {
-            res.status(200).send(pokemonId)
-        } else {
-            res.status(404).send(`The id: ${id} does not belong to a pokemon`)
+    try {
+        if (id) {
+            if (id.length < 32) {
+                pokemonId = await getPokemonByIDapi(id)
+            } else {
+                pokemonId = await Pokemon.findOne({
+                    where: {
+                        id: id
+                    },
+                    include: {
+                        model: Types,
+                        attributes: ['name'],
+                        through: {
+                            attributes: [],
+                        },
+                    },
+                });
+            }
+            if (pokemonId.length) {
+                res.status(200).send(pokemonId)
+            } else {
+                res.status(404).send(`The id: ${id} does not belong to a pokemon`)
+            }
         }
+    } catch (error) {
+        res.status(404).send(error)
     }
+
 
 })
 
 router.post('/pokemons', async (req, res) => {
     let {
-        name, types, height, weight, img, hp, attack, defense, speed, created_DB,
+        name, types, height, weight, image, hp, attack, defense, speed, created_DB,
     } = req.body
-    let createPoke = await Pokemon.create({
-        name,
-        height,
-        weight,
-        img,
-        hp,
-        attack,
-        defense,
-        speed,
-        created_DB
-    })
-    let typesCreated = await Types.findAll({
-        where: {
-            name: types
-        }
-    }).catch(error => console.log(error))
-    console.log(typesCreated)
-    await createPoke.addTypes(typesCreated)
-    console.log(createPoke)
-    res.send("Pokemon created")
+    let createPoke
+    let typesCreated
+    name.toLowerCase()
+    try {
+        createPoke = await Pokemon.create({
+            name,
+            height,
+            weight,
+            image,
+            hp,
+            attack,
+            defense,
+            speed,
+            created_DB
+        })
+        typesCreated = await Types.findOne({
+            where: {
+                name: {
+                    [Op.or]: types
+                }
+            }
+        })
+        if (!typesCreated.length) throw new Error('Los tipos del nuevo pokemon no coinciden con los existentes')
+        await createPoke.addTypes(typesCreated)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+
+
+
+    res.status(200).send("Pokemon created")
 })
 
 

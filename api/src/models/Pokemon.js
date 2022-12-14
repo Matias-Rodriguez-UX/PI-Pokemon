@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
     weight: {
       type: DataTypes.FLOAT
     },
-    img: {
+    image: {
       type: DataTypes.STRING,
     },
     created_DB: {
