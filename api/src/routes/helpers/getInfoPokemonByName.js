@@ -8,6 +8,7 @@ const headers = {
 
 const getInfoPokemonByName = async (name) => {
     name = name.toLowerCase()
+    let pokeArray = []
     try {
         const url = `https://pokeapi.co/api/v2/pokemon/${name}`
         const infoFirst = await axios.get(url, headers)
@@ -18,13 +19,14 @@ const getInfoPokemonByName = async (name) => {
             types: detailsPoke.types.map(el => el.type.name),
             height: detailsPoke.height,
             weight: detailsPoke.weight,
-            img: detailsPoke.sprites.other.dream_world.front_default,
+            image: detailsPoke.sprites.other.dream_world.front_default,
             hp: detailsPoke.stats[0].base_stat,
             attack: detailsPoke.stats[1].base_stat,
             defense: detailsPoke.stats[2].base_stat,
             speed: detailsPoke.stats[5].base_stat,
         }
-        return poke
+        pokeArray.push(poke)
+        return pokeArray
     } catch (error) {
         return ({ message: 'Pokemon not found...' })
     }

@@ -16,6 +16,7 @@ const getPokemonsApi = async () => {
         pokemon.id = detailsUrl.data.id
         pokemon.image = detailsUrl.data.sprites.other.dream_world.front_default
         pokemon.types = detailsUrl.data.types.map(type => type.type.name)
+        pokemon.attack = detailsUrl.data.stats[1].base_stat
     }
     return pokemonsFourtyUrl
 };

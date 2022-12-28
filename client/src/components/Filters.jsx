@@ -1,42 +1,9 @@
 import React from "react"
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
-import { filterCreated, filterPokemonByStatus, getTypes, orderAtoZ } from "../actions";
 
 
-export function Filters() {
-    let dispatch = useDispatch()
-    const allTypes = useSelector((state) => state.types)
-
-    useEffect(() => {
-        dispatch(getTypes())
-    }, []);
-
-    function handleFilterType(e) {
-        e.preventDefault()
-        dispatch(filterPokemonByStatus(e.target.value))
-    }
-
-    function handleFilterCreated(e) {
-        e.preventDefault()
-        dispatch(filterCreated(e.target.value))
-    }
-
-    function handleOrderAlph(e) {
-        e.preventDefault()
-        dispatch(orderAtoZ(e.target.value))
-    }
-
+export default function Filters({ handleFilterType, handleFilterCreated, allTypes }) {
     return (
         <div>
-            <select name="orderAlph" id="" onChange={(e) => (handleOrderAlph(e))}>
-                <option value="a">A to Z</option>
-                <option value="z">Z to A</option>
-            </select>
-            <select name="atack" id="">
-                <option value="high">Higher Atack</option>
-                <option value="low">Lower Atack</option>
-            </select>
             <select name="filterType" id="" onChange={(e) => (handleFilterType(e))}>
                 <option value="all">All</option>
                 {

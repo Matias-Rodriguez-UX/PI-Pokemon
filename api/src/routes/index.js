@@ -35,11 +35,12 @@ router.get('/pokemons', async (req, res) => {
             },
         });
         if (pokeDB) {
-            return res.status(200).send(pokeDB)
+            let pokeArray = []
+            pokeArray.push(pokeDB)
+            return res.status(200).send(pokeArray)
         }
 
         let pokeName = await getInfoPokemonByName(name)
-        console.log(pokeName)
         pokeName ?
             res.status(200).send(pokeName) :
             res.status(404).send({ error: "Pokemon not Found" })
@@ -49,21 +50,25 @@ router.get('/pokemons', async (req, res) => {
 })
 
 router.get('/types', async (req, res) => {
+    try {
+        const typesFromApi = await getTypesFromApi()
+        for (let eachType of typesFromApi) {
+            Types.findOrCreate({
+                where: {
+                    name: eachType
+                }
+            })
+        }
 
-    const typesFromApi = await getTypesFromApi()
-    // console.log(typesPoke)
-    for (let eachType of typesFromApi) {
-        Types.findOrCreate({
-            where: {
-                name: eachType
-            }
-        })
+        const typesFromDb = await Types.findAll()
+        typesFromDb.length ?
+            res.send(typesFromDb) :
+            res.send("Pokemon`s types not found in DB...")
+    } catch (error) {
+        console.log(error)
+        res.send(error)
     }
 
-    const typesFromDb = await Types.findAll()
-    typesFromDb.length ?
-        res.send(typesFromDb) :
-        res.send("Pokemon`s types not found in DB...")
 })
 
 router.get('/pokemons/:id', async (req, res) => {
@@ -106,7 +111,7 @@ router.post('/pokemons', async (req, res) => {
     } = req.body
     let createPoke
     let typesCreated
-    name.toLowerCase()
+    name = name.toLowerCase()
     try {
         createPoke = await Pokemon.create({
             name,
