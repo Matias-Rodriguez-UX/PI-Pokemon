@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_POKEMONS, FILTER_BY_TYPE, FILTER_CREATED, GET_TYPES, ORDER_A_TO_Z, ORDER_BY_ATTACK, GET_POKEMONS_BY_NAME } from './allActions';
+import { GET_POKEMONS, FILTER_BY_TYPE, FILTER_CREATED, GET_TYPES, ORDER_A_TO_Z, ORDER_BY_ATTACK, GET_POKEMONS_BY_NAME, GET_POKEMON_BY_ID } from './allActions';
 
 const headers = {
     headers: {
@@ -9,11 +9,16 @@ const headers = {
 
 export function getPokemons() {
     return async function (dispatch) {
-        let info = await axios.get('http://localhost:3001/pokemons', headers);
-        return (dispatch({
-            type: GET_POKEMONS,
-            payload: info.data
-        }))
+        try {
+            let info = await axios.get('http://localhost:3001/pokemons', headers);
+            return (dispatch({
+                type: GET_POKEMONS,
+                payload: info.data
+            }))
+        } catch (error) {
+            console.log("Error", error)
+        }
+
     }
 }
 
@@ -49,11 +54,16 @@ export function filterCreated(payload) {
 
 export function getTypes() {
     return async function (dispatch) {
-        let info = await axios.get('http://localhost:3001/types', headers);
-        return (dispatch({
-            type: GET_TYPES,
-            payload: info.data
-        }))
+        try {
+            let info = await axios.get('http://localhost:3001/types', headers);
+            return (dispatch({
+                type: GET_TYPES,
+                payload: info.data
+            }))
+        } catch (error) {
+            console.log("ERROR", error)
+        }
+
     }
 }
 
@@ -73,7 +83,26 @@ export function orderByAttack(payload) {
 
 export function postPokemon(payload) {
     return async function () {
-        let info = await axios.post('http://localhost:3001/pokemons', payload);
-        return (info)
+        try {
+            let info = await axios.post('http://localhost:3001/pokemons', payload);
+            return (info)
+        } catch (error) {
+            console.log("ERROR", error)
+        }
+
+    }
+}
+
+export function getPokemonByID(id) {
+    return async function (dispatch) {
+        try {
+            let info = await axios.get(`http://localhost:3001/pokemons/${id}`, headers)
+            return (dispatch({
+                type: GET_POKEMON_BY_ID,
+                payload: info.data
+            }))
+        } catch (error) {
+            console.log("Error", error)
+        }
     }
 }

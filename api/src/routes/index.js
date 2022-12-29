@@ -79,7 +79,7 @@ router.get('/pokemons/:id', async (req, res) => {
             if (id.length < 32) {
                 pokemonId = await getPokemonByIDapi(id)
             } else {
-                pokemonId = await Pokemon.findOne({
+                pokemonId = [await Pokemon.findOne({
                     where: {
                         id: id
                     },
@@ -90,12 +90,12 @@ router.get('/pokemons/:id', async (req, res) => {
                             attributes: [],
                         },
                     },
-                });
+                })]
             }
             if (pokemonId.length) {
                 res.status(200).send(pokemonId)
             } else {
-                res.status(404).send(`The id: ${id} does not belong to a pokemon`)
+                res.status(404).send({ message: `The id: ${id} does not belong to a pokemon` })
             }
         }
     } catch (error) {
@@ -110,7 +110,7 @@ router.post('/pokemons', async (req, res) => {
         name, types, height, weight, image, hp, attack, defense, speed, created_DB,
     } = req.body
     let createPoke
-    let typesCreated
+    let typesCreated = []
     name = name.toLowerCase()
     try {
         createPoke = await Pokemon.create({
@@ -124,22 +124,31 @@ router.post('/pokemons', async (req, res) => {
             speed,
             created_DB
         })
-        typesCreated = await Types.findOne({
-            where: {
-                name: {
-                    [Op.or]: types
+        let resp
+        for (const type of types) {
+            typesCreated.push(resp = await Types.findOne({
+                where: {
+                    name: {
+                        [Op.or]: [type]
+                    }
                 }
-            }
-        })
-        if (!typesCreated.length) throw new Error('Los tipos del nuevo pokemon no coinciden con los existentes')
-        await createPoke.addTypes(typesCreated)
+            }))
+        }
+        if (!typesCreated.length) throw new Error('The types of the new pokemon do not match the existing ones')
+        try {
+            await createPoke.addTypes(typesCreated)
+            res.status(200).send({ message: "Pokemon created" })
+        } catch (error) {
+            res.status(400).send({ message: error.message })
+        }
+
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).send({ message: error.message })
     }
 
 
 
-    res.status(200).send("Pokemon created")
+
 })
 
 

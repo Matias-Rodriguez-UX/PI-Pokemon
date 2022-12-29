@@ -1,9 +1,10 @@
-import { FILTER_BY_TYPE, FILTER_CREATED, GET_POKEMONS, GET_POKEMONS_BY_NAME, GET_TYPES, ORDER_A_TO_Z, ORDER_BY_ATTACK, POST_POKEMON } from "../actions/allActions";
+import { FILTER_BY_TYPE, FILTER_CREATED, GET_POKEMONS, GET_POKEMONS_BY_NAME, GET_POKEMON_BY_ID, GET_TYPES, ORDER_A_TO_Z, ORDER_BY_ATTACK, POST_POKEMON } from "../actions/allActions";
 
 const initialState = {
     pokemons: [],
     allPokemons: [],
-    types: []
+    types: [],
+    pokemon: [],
 }
 
 function sortArrayAtoZ(x, y) {
@@ -67,6 +68,11 @@ export default function rootReducer(state = initialState, action) {
         case POST_POKEMON:
             return {
                 ...state
+            }
+        case GET_POKEMON_BY_ID:
+            return {
+                ...state,
+                pokemon: action.payload
             }
         default:
             return state;

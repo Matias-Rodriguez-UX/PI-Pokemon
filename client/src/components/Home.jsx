@@ -91,7 +91,10 @@ export default function Home() {
                 !Array.isArray(currentPokemons) ?
                     <h1>{currentPokemons.message}</h1> :
                     currentPokemons.map(el =>
-                        <Card key={el.id} id={el.id} name={el.name} image={el.image} types={el.types} />
+                        (!el.hasOwnProperty('created_DB')) ?
+                            <Card key={el.id} id={el.id} name={el.name} image={el.image} types={el.types} />
+                            :
+                            <Card key={el.id} id={el.id} name={el.name} types={el.types?.map(el => el.name)} image={el.image} />
                     )}
         </div>
     )
