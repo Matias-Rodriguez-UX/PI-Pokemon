@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_POKEMONS, FILTER_BY_TYPE, FILTER_CREATED, GET_TYPES, ORDER_A_TO_Z, ORDER_BY_ATTACK, GET_POKEMONS_BY_NAME, GET_POKEMON_BY_ID } from './allActions';
+import { GET_POKEMONS, FILTER_BY_TYPE, FILTER_CREATED, GET_TYPES, ORDER_A_TO_Z, ORDER_BY_ATTACK, GET_POKEMONS_BY_NAME, GET_POKEMON_BY_ID, LOADING_ACTION } from './allActions';
 
 const headers = {
     headers: {
@@ -14,7 +14,8 @@ export function getPokemons() {
             return (dispatch({
                 type: GET_POKEMONS,
                 payload: info.data
-            }))
+            }),
+                dispatch(loadingAction(false)))
         } catch (error) {
             console.log("Error", error)
         }
@@ -29,7 +30,8 @@ export function getPokemonsByName(name) {
             return (dispatch({
                 type: GET_POKEMONS_BY_NAME,
                 payload: info.data
-            }))
+            }),
+                dispatch(loadingAction(false)))
         } catch (error) {
             console.log("Error", error)
         }
@@ -100,9 +102,17 @@ export function getPokemonByID(id) {
             return (dispatch({
                 type: GET_POKEMON_BY_ID,
                 payload: info.data
-            }))
+            }),
+                dispatch(loadingAction(false)))
         } catch (error) {
             console.log("Error", error)
         }
+    }
+}
+
+export function loadingAction(payload) {
+    return {
+        type: LOADING_ACTION,
+        payload,
     }
 }

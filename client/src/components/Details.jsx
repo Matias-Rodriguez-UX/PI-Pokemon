@@ -1,26 +1,20 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { getPokemonByID } from "../actions";
+import { getPokemonByID, loadingAction } from "../actions";
 import { Link, useParams } from 'react-router-dom'
 import { Loader } from "./Loader";
 
 export default function Details() {
     const urlimg = 'https://play-lh.googleusercontent.com/wAWerkEu_g2_BMCl85WKqN2mxn0xW1O22nV6yJOayrMKu9pqtrLMn7S2Zd1xaykKm0g'
-    const [loading, setLoading] = useState(false)
+    const showLoading = useSelector((state) => state.showLoading)
     const dispatch = useDispatch()
     let { id } = useParams()
 
-    const changeLoading = () => {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false);
-        }, 9000)
-    }
 
     useEffect(() => {
+        dispatch(loadingAction(true))
         dispatch(getPokemonByID(id))
-        changeLoading()
     }, [dispatch, id])
 
     const pokemonDetails = useSelector((state) => state.pokemon)
@@ -30,7 +24,7 @@ export default function Details() {
     return (
         <div>
             {
-                loading ?
+                showLoading ?
                     <Loader /> :
                     Array.isArray(pokemonDetails) && pokemonDetails.length > 0 ?
                         <div>

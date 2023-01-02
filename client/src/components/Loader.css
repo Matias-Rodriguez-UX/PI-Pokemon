@@ -1,52 +1,61 @@
-.lds-ripple {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
 }
 
-.lds-ripple div {
-  position: absolute;
-  border: 4px solid rgb(54, 54, 54);
-  opacity: 1;
+h2 {
+  color: #fff;
+  font-weight: 600;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+}
+
+.pokeball {
+  margin-top: 1rem;
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
   border-radius: 50%;
-  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.05);
+  animation: frames .8s linear 0s infinite;
+  margin-bottom: 14rem;
 }
 
-.lds-ripple div:nth-child(2) {
-  animation-delay: -0.5s;
+.pokeball:after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: red;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.05);
+  top: -4px
 }
 
-@keyframes lds-ripple {
+.pokeball:before {
+  content: '';
+  position: absolute;
+  background-color: #fff;
+  width: 10px;
+  height: 10px;
+  border: 4px solid;
+  border-radius: 50%;
+  bottom: 18px;
+  right: 18px;
+  z-index: 1;
+}
+
+/* AnimationFrames */
+@keyframes frames {
   0% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
-
-  4.9% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
-
-  5% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
-    opacity: 1;
+    transform: rotate(0deg);
   }
 
   100% {
-    top: 0px;
-    left: 0px;
-    width: 72px;
-    height: 72px;
-    opacity: 0;
+    transform: rotate(360deg);
   }
 }

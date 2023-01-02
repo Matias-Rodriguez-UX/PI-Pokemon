@@ -2,27 +2,29 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from 'react-redux'
 import { getPokemonsByName } from "../actions";
+import './SearchBar.css'
 
-export function Searchbar({ changeLoading }) {
+export function Searchbar({ loadingAction }) {
     const dispatch = useDispatch()
     const [name, setName] = useState('')
 
     const handleInput = (e) => {
         e.preventDefault()
-        setName(e.target.value)
+        let name = e.target.value.toLowerCase()
+        setName(name)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        dispatch(loadingAction(true))
         dispatch(getPokemonsByName(name))
-        changeLoading()
         setName('')
     }
 
     return (
         <div>
-            <input type="text" name="name" id="" placeholder="Search by Name..." onChange={(e) => handleInput(e)} />
-            <input type="submit" value="Buscar" onClick={(e) => { handleSubmit(e) }} />
+            <input className="searchText" type="text" name="name" id="" placeholder="Search by Name..." value={name} onChange={(e) => handleInput(e)} />
+            <input className="searchButton" type="submit" value="Search" onClick={(e) => { handleSubmit(e) }} />
         </div>
     )
 }

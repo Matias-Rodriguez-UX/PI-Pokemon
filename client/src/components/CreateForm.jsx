@@ -111,28 +111,34 @@ export function CreateForm() {
                 </div>
                 <div>
                     <label htmlFor="HP">HP</label>
-                    <input min="1" type='number' id="HP" name='hp' value={input.hp}
+                    <input min="1" max="300" type='range' id="HP" name='hp' value={input.hp}
                         onChange={e => handleChanges(e)} required />
+                    <h4>{input.hp} HP</h4>
                 </div>
                 <div>
                     <label htmlFor="attack">Atack</label>
-                    <input min="1" type='number' id="attack" name='attack' value={input.attack} onChange={e => handleChanges(e)} required />
+                    <input min="1" max="200" type='range' id="attack" name='attack' value={input.attack} onChange={e => handleChanges(e)} required />
+                    <h4>{input.attack} pts</h4>
                 </div>
                 <div>
                     <label htmlFor="defense">Defense</label>
-                    <input min="1" type='number' id="defense" name='defense' value={input.defense} onChange={e => handleChanges(e)} required />
+                    <input min="1" max="200" type='range' id="defense" name='defense' value={input.defense} onChange={e => handleChanges(e)} required />
+                    <h4>{input.defense} pts</h4>
                 </div>
                 <div>
                     <label htmlFor="speed">Speed</label>
-                    <input min="1" type='number' id="speed" name='speed' value={input.speed} onChange={e => handleChanges(e)} required />
+                    <input min="1" max="200" type='range' id="speed" name='speed' value={input.speed} onChange={e => handleChanges(e)} required />
+                    <h4>{input.speed} pts</h4>
                 </div>
                 <div>
                     <label htmlFor="height">Height</label>
-                    <input type='number' id="height" name='height' value={input.height} onChange={e => handleChanges(e)} required />
+                    <input min="0" step=".1" type='number' id="height" name='height' value={input.height} onChange={e => handleChanges(e)} required />
+                    <h4>{input.height} mts</h4>
                 </div>
                 <div>
                     <label htmlFor="weight">Weight</label>
-                    <input type='number' id="weight" name='weight' value={input.weight} onChange={e => handleChanges(e)} required />
+                    <input min="0" step=".1" type='number' id="weight" name='weight' value={input.weight} onChange={e => handleChanges(e)} required />
+                    <h4>{input.weight} Kgs</h4>
                 </div>
                 <div>
                     <label htmlFor="image">Image</label>

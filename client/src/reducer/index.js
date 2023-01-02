@@ -1,10 +1,11 @@
-import { FILTER_BY_TYPE, FILTER_CREATED, GET_POKEMONS, GET_POKEMONS_BY_NAME, GET_POKEMON_BY_ID, GET_TYPES, ORDER_A_TO_Z, ORDER_BY_ATTACK, POST_POKEMON } from "../actions/allActions";
+import { FILTER_BY_TYPE, FILTER_CREATED, GET_POKEMONS, GET_POKEMONS_BY_NAME, GET_POKEMON_BY_ID, GET_TYPES, LOADING_ACTION, ORDER_A_TO_Z, ORDER_BY_ATTACK, POST_POKEMON } from "../actions/allActions";
 
 const initialState = {
     pokemons: [],
     allPokemons: [],
     types: [],
     pokemon: [],
+    showLoading: false,
 }
 
 function sortArrayAtoZ(x, y) {
@@ -74,6 +75,12 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 pokemon: action.payload
             }
+        case LOADING_ACTION:
+            return {
+                ...state,
+                showLoading: action.payload
+            }
+
         default:
             return state;
     }
