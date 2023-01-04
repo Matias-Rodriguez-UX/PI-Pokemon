@@ -4,6 +4,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getPokemonByID, loadingAction } from "../actions";
 import { Link, useParams } from 'react-router-dom'
 import { Loader } from "./Loader";
+import './Details.css'
+const typeColor = {
+    bug: "#26de81",
+    dragon: "#615631",
+    electric: "#fed330",
+    fairy: "#FF0069",
+    fighting: "#30336b",
+    fire: "#f0932b",
+    flying: "#003535",
+    grass: "#00b894",
+    ground: "#EFB549",
+    ghost: "#a55eea",
+    ice: "#74b9ff",
+    normal: "#cc00c9",
+    poison: "#6c5ce7",
+    psychic: "#242061",
+    rock: "#2d3436",
+    water: "#0190FF",
+    word: "#fff",
+    dark: "#0f0f0f",
+    shadow: "#2d0000",
+}
 
 export default function Details() {
     const urlimg = 'https://play-lh.googleusercontent.com/wAWerkEu_g2_BMCl85WKqN2mxn0xW1O22nV6yJOayrMKu9pqtrLMn7S2Zd1xaykKm0g'
@@ -27,24 +49,36 @@ export default function Details() {
                 showLoading ?
                     <Loader /> :
                     Array.isArray(pokemonDetails) && pokemonDetails.length > 0 ?
-                        <div>
-                            <h1>{pokemon.name}</h1>
-                            <img src={!pokemon.image ? urlimg : pokemon.image} alt="pokemon img" />
-                            <h4>Height: {pokemon.height}</h4>
-                            <h4>Weight: {pokemon.weight}</h4>
-                            <h4>HP: {pokemon.hp}</h4>
-                            <h4>Attack: {pokemon.attack}</h4>
-                            <h4>Defense: {pokemon.defense}</h4>
-                            <h4>Speed: {pokemon.speed}</h4>
-                            <h4>Types:</h4>
-                            {!pokemon.created_DB ? pokemon.types?.map((type, index) => <p key={index}>{type}</p>) : pokemon.types?.map((type, index) => <p key={index}>{type.name}</p>)}
+                        <div className="bigCard">
+                            <div className="bigCard-img">
+                                <img src={!pokemon.image ? urlimg : pokemon.image} alt="pokemon img" />
+                            </div>
+                            <div className="bigCard-info">
+                                <h1>{pokemon.name}</h1>
+                                <h3 className="h2-id">id # {pokemon.id}</h3>
+                                <h4>Height: {pokemon.height} mts</h4>
+                                <h4>Weight: {pokemon.weight} Kg</h4>
+                                <h4>HP: {pokemon.hp} pts</h4>
+                                <h4>Attack: {pokemon.attack} pts</h4>
+                                <h4>Defense: {pokemon.defense} pts</h4>
+                                <h4>Speed: {pokemon.speed} pts</h4>
+                            </div>
+                            <div className="bigCard-types">
+                                <h4>Types:</h4>
+                                {!pokemon.created_DB ?
+                                    pokemon.types?.map((type, index) =>
+                                        <p key={index} style={{ color: '#fff', backgroundColor: typeColor[type] }}>{type}</p>) :
+                                    pokemon.types?.map((type, index) =>
+                                        <p key={index} style={{ color: '#fff', backgroundColor: typeColor[type.name] }}>{type.name}</p>)}
+                            </div>
+
                         </div> :
                         <div>
                             <h1>Pokemon not found</h1>
                         </div>
             }
             <Link to='/home'>
-                <button>Back</button>
+                <button className="backButton">Back</button>
             </Link>
         </div>
     )

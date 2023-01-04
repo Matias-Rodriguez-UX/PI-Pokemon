@@ -19,4 +19,47 @@ describe('Pokemon model', () => {
       });
     });
   });
+  describe('HP', () => {
+    it('Lanza un error si HP no es un numero', (done) => {
+      Pokemon.create({ hp: 'hello' })
+        .then(() => done(new Error('Debe ser un numero')))
+        .catch(() => done());
+    });
+    it('Funciona con un numero', () => {
+      Pokemon.create({ hp: 20 })
+    })
+  })
+
+  describe('ATTACK', () => {
+    it('Lanza un error si HP no es un numero', (done) => {
+      Pokemon.create({ attack: 'hello' })
+        .then(() => done(new Error('Debe ser un numero')))
+        .catch(() => done());
+    });
+    it('Funciona con un numero', () => {
+      Pokemon.create({ attack: 20 })
+    })
+  })
+
+  describe('DEFENSE', () => {
+    it('Lanza un error si defense no es un numero', (done) => {
+      Pokemon.create({ defense: 'hello' })
+        .then(() => done(new Error('Debe ser un numero')))
+        .catch(() => done());
+    });
+    it('Funciona con un numero', () => {
+      Pokemon.create({ defense: 20 })
+    })
+  })
+
+  describe('SPEED', () => {
+    it('Lanza un error si SPEED no es un numero', (done) => {
+      Pokemon.create({ speed: 'hello' })
+        .then(() => done(new Error('Debe ser un numero')))
+        .catch(() => done());
+    });
+    it('Funciona con un numero', () => {
+      Pokemon.create({ speed: 20 })
+    })
+  })
 });

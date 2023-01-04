@@ -18,17 +18,31 @@ function sortArrayZtoA(x, y) {
     if (x.name < y.name) { return 1; }
     return 0;
 }
+
+
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
         case GET_POKEMONS:
             return {
                 ...state,
                 pokemons: action.payload,
-                allPokemons: action.payload,
+                allPokemons: !state.allPokemons.length ? action.payload : state.allPokemons,
             }
         case FILTER_BY_TYPE:
             const allPokemons = state.allPokemons
-            const typeFilter = action.payload === "all" ? allPokemons : allPokemons.filter(el => el.types.includes(action.payload))
+            const filterDB = allPokemons.filter(el => el.created_DB)
+            console.log(filterDB)
+            const resultDB = []
+            filterDB.forEach(poke => {
+                for (const type of poke.types) {
+                    if (type.name === action.payload) {
+                        resultDB.push(poke)
+                    }
+                }
+            })
+            console.log(resultDB)
+            const typeFilter = action.payload === "all" ? allPokemons : [...allPokemons.filter(el => el.types.includes(action.payload)), ...resultDB]
+            console.log(typeFilter)
             return {
                 ...state,
                 pokemons: typeFilter

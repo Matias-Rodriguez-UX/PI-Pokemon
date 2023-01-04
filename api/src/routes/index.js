@@ -145,11 +145,28 @@ router.post('/pokemons', async (req, res) => {
     } catch (error) {
         res.status(400).send({ message: error.message })
     }
-
-
-
-
 })
+
+router.delete('/pokemons/:id', async (res, req) => {
+    let id = req.params.id
+    Pokemon.findByPk(id)
+        .then(pokemon => {
+            pokemon.removeTypes();
+            return pokemon
+        })
+        .then(pokemon => pokemon.destroy())
+        .then(r => res.status(200).send({ message: "Pokemon deleted" }))
+        .catch(err => res.status(404).send({ message: "Error: " + err }))
+})
+
+// Pokemon.findByPk(id)
+//         .then(pokemon => {
+//             pokemon.removeTypes()
+//             return pokemon;
+//         })
+//         .then(pokemon => pokemon.destroy())
+//         .then(r => res.status(200).send('Pokemon eliminado correctamente!'))
+//         .catch(err => console.log(err));
 
 
 

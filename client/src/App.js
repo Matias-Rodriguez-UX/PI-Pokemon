@@ -11,8 +11,9 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <img src={urlImg} alt="title pokemon" className='pageTitle' style={{
-          width: '50%',
-          height: '50%'
+          width: '45%',
+          height: '45%',
+          marginBottom: "0.2rem"
         }} />
         <Switch>
           <Route exact path={'/'} component={LandingPage} />

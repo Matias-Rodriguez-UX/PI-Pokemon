@@ -6,7 +6,10 @@ export function LandingPage() {
     return (
         <div>
             <Link to='/home'>
-                <img src={pokeball} alt="go" width='30%' height='30%' />
+                <img src={pokeball} alt="go" width='27%' height='27%'
+                    style={{
+                        marginBottom: "3rem"
+                    }} />
             </Link>
         </div>
     )

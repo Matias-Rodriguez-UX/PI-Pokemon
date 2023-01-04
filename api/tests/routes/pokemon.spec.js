@@ -11,14 +11,29 @@ const pokemon = {
 
 describe('Pokemon routes', () => {
   before(() => conn.authenticate()
-  .catch((err) => {
-    console.error('Unable to connect to the database:', err);
-  }));
+    .catch((err) => {
+      console.error('Unable to connect to the database:', err);
+    }));
   beforeEach(() => Pokemon.sync({ force: true })
     .then(() => Pokemon.create(pokemon)));
   describe('GET /pokemons', () => {
     it('should get 200', () =>
       agent.get('/pokemons').expect(200)
     );
+  });
+  describe('POST /pokemons', () => {
+    it("POST agrega un nuevo pokemon", function () {
+      agent.post("/pokemons")
+        .send(pokemon)
+        .expect(200)
+    })
+  });
+
+  describe('GET /types', () => {
+    it("Tiene estado 200", function () {
+      agent.get("/types")
+        .send(pokemon)
+        .expect(200)
+    })
   });
 });

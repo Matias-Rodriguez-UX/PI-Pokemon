@@ -4,22 +4,24 @@ import './Card.css'
 
 const typeColor = {
     bug: "#26de81",
-    dragon: "#ffeaa7",
+    dragon: "#615631",
     electric: "#fed330",
     fairy: "#FF0069",
     fighting: "#30336b",
     fire: "#f0932b",
-    flying: "#81ecec",
+    flying: "#003535",
     grass: "#00b894",
     ground: "#EFB549",
     ghost: "#a55eea",
     ice: "#74b9ff",
-    normal: "#95afc0",
+    normal: "#cc00c9",
     poison: "#6c5ce7",
-    psychic: "#a29bfe",
+    psychic: "#242061",
     rock: "#2d3436",
     water: "#0190FF",
-    word: "#fff"
+    word: "#fff",
+    dark: "#0f0f0f",
+    shadow: "#2d0000",
 }
 
 export default function Card({ name, image, types, id }) {

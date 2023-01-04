@@ -1,0 +1,99 @@
+body,
+html {
+    height: auto;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.backButton {
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    border: 2px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 16px 24px;
+    text-align: center;
+    text-transform: uppercase;
+    width: auto;
+    transition: 0.5s;
+    backdrop-filter: blur(10px);
+    margin: 1rem;
+}
+
+.backButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+}
+
+.bigCard {
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    height: auto;
+    width: 140vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 1rem;
+    text-decoration: none;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    transition: 0.5s;
+}
+
+.bigCard .bigCard-img img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.bigCard .bigCard-img {
+    height: 40vh;
+    width: 40vh;
+}
+
+.bigCard .bigCard-info {
+    margin-bottom: 2rem;
+}
+
+.bigCard .bigCard-info h1 {
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.bigCard .bigCard-info h3 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.bigCard .bigCard-info h4 {
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.737);
+}
+
+.bigCard .bigCard-types h4 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.bigCard .bigCard-types p {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #fff;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+}

@@ -4,7 +4,7 @@ import React from "react"
 export default function Filters({ handleFilterType, handleFilterCreated, allTypes }) {
     return (
         <div className="filters">
-            <h3>Sort</h3>
+            <h3>Filter</h3>
             <div className="custom-select">
                 <select name="filterType" id="" onChange={(e) => (handleFilterType(e))}>
                     <option value="" disabled selected hidden>by type</option>

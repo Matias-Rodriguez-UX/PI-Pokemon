@@ -13,6 +13,7 @@ import './Home.css'
 
 export default function Home() {
     const dispatch = useDispatch()
+    const allpoke = useSelector((state) => state.allPokemons)
     const allPokemons = useSelector((state) => state.pokemons)
     const showLoading = useSelector((state) => state.showLoading)
     const [currentPage, setCurrentPage] = useState(1)
@@ -21,11 +22,24 @@ export default function Home() {
     const allTypes = useSelector((state) => state.types)
     const indexLastPokemon = currentPage * pokemonPerPage
     const indexFirstPokemon = indexLastPokemon - pokemonPerPage
-    const currentPokemons = Array.isArray(allPokemons) && allPokemons.length ? allPokemons.slice(indexFirstPokemon, indexLastPokemon) : allPokemons
+    const currentPokemons = Array.isArray(allPokemons) && allPokemons.length > 1 ? allPokemons.slice(indexFirstPokemon, indexLastPokemon) : allPokemons
+
+    console.log(currentPokemons)
 
     const paging = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
+    const previousPage = () => {
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const nextPage = () => {
+        if (currentPage !== Math.ceil(allPokemons / pokemonPerPage)) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
 
     useEffect(() => {
         dispatch(loadingAction(true))
@@ -35,6 +49,7 @@ export default function Home() {
 
     function handleClick(e) {
         e.preventDefault()
+        dispatch(loadingAction(true))
         dispatch(getPokemons())
     }
 
@@ -105,9 +120,12 @@ export default function Home() {
                                     pokemonsPerPage={pokemonPerPage}
                                     allPokemons={allPokemons.length}
                                     paging={paging}
+                                    page={currentPage}
+                                    previousPage={previousPage}
+                                    nextPage={nextPage}
                                 />
                                 <div className="Cards">
-                                    {currentPokemons.map(el =>
+                                    {currentPokemons.length ? currentPokemons.map(el =>
                                         (!el.hasOwnProperty('created_DB')) ?
 
                                             <Card key={el.id} id={el.id} name={el.name} image={el.image} types={el.types} />
@@ -117,13 +135,16 @@ export default function Home() {
                                             <Card key={el.id} id={el.id} name={el.name} types={el.types?.map(el => el.name)} image={el.image} />
 
 
-                                    )}
+                                    ) : <h1 style={{ color: '#fff', margin: '1rem', padding: '1rem' }}>Pokemon not found</h1>}
                                 </div>
 
                                 <Paging
                                     pokemonsPerPage={pokemonPerPage}
                                     allPokemons={allPokemons.length}
                                     paging={paging}
+                                    page={currentPage}
+                                    previousPage={previousPage}
+                                    nextPage={nextPage}
                                 />
                             </div>
                 }

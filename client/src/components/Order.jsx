@@ -5,7 +5,7 @@ import './Ordering.css'
 export default function Order({ handleOrderAlph, handleOrderByAttack }) {
     return (
         <div className="order">
-            <h3>Order</h3>
+            <h3>Sort</h3>
             <div className="custom-select">
                 <select placeholder="Order alphabetically" name="orderAlph" id="name" onChange={(e) => (handleOrderAlph(e))}>
                     <option value="" disabled selected hidden> by name</option>

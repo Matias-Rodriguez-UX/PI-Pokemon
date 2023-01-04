@@ -23,9 +23,29 @@ ul.pagination li a {
     cursor: pointer;
 }
 
-
-
 ul.pagination li a:hover:not(.active) {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
+}
+
+.pagination a.active {
+    background-color: rgba(255, 255, 255, 0.641);
+    color: #0093E9;
+    transition: .5s;
+}
+
+a.active:hover {
+    background-color: rgba(255, 255, 255, 0.907);
+    color: #0183ce;
+}
+
+ul.pagination li a.desactiveBtn {
+    font-weight: 800;
+    cursor: not-allowed;
+    color: rgba(255, 255, 255, 0.15);
+    pointer-events: none;
+}
+
+ul.pagination li a.desactiveBtn:hover {
+    transition: none;
 }
